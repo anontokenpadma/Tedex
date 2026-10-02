@@ -199,6 +199,12 @@
             color: var(--text-primary);
         }
 
+        .btn-tertiary {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+        }
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
@@ -258,6 +264,103 @@
         .card p {
             color: var(--text-secondary);
             font-size: 0.95rem;
+        }
+
+        /* Downloads Section */
+        .downloads {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .download-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .download-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .download-card .arch-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-card h3 {
+            margin-bottom: 0.5rem;
+            font-family: 'Consolas', monospace;
+            color: var(--accent);
+        }
+
+        .download-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .download-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .download-note {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .download-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .download-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Quick Install Block */
+        .quick-install {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+        }
+
+        .quick-install-title {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .quick-install pre {
+            padding: 0;
+            background: transparent;
+            border: none;
+            color: #e5e7eb;
+        }
+
+        .quick-install .comment {
+            color: #6b7280;
+            font-style: italic;
         }
 
         /* Beta Policy Section */
@@ -477,6 +580,7 @@
             .workflow { padding: 2rem 1.5rem; }
             .beta-policy { padding: 2rem 1.5rem; }
             .manager-shell { padding: 2rem 1.5rem; }
+            .downloads { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
@@ -494,6 +598,7 @@
         </div>
         <div class="nav-links">
             <a href="#features">Features</a>
+            <a href="#downloads">Downloads</a>
             <a href="#beta-policy">Beta Policy</a>
             <a href="#workflow">How It Works</a>
             <a href="#docs">CLI Docs</a>
@@ -507,6 +612,7 @@
         <p>Tedex provides a secure tunnel via WebSocket Secure (WSS) that lets you install, control, and maintain persistent connections to your Linux servers from anywhere.</p>
         <div class="cta-buttons">
             <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="btn btn-primary">🎯 Register for Early Access</a>
+            <a href="#downloads" class="btn btn-tertiary">📦 Download Client</a>
             <a href="#docs" class="btn btn-secondary">Read CLI Documentation</a>
         </div>
     </header>
@@ -532,6 +638,45 @@
                 <h3>Clear Permissions</h3>
                 <p>Client Manager (controller) and Client (target server) share the same credentials but have distinct, transparent roles.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section id="downloads">
+        <div class="downloads">
+            <div class="section-title" style="margin-bottom: 1rem;">
+                <h2>📦 Download Binaries</h2>
+                <p>Choose the appropriate binary for your system architecture. Click the button to download directly from GitHub.</p>
+            </div>
+
+            <div class="download-grid">
+                <div class="download-card">
+                    <div class="arch-icon">💻</div>
+                    <h3>x86_64</h3>
+                    <p>For standard Intel / AMD 64-bit Linux servers and workstations.</p>
+                    <a href="https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-x86" target="_blank" class="btn btn-primary">⬇️ Download x86_64</a>
+                </div>
+                <div class="download-card">
+                    <div class="arch-icon">📱</div>
+                    <h3>aarch64 (ARM64)</h3>
+                    <p>For ARM-based servers like Raspberry Pi, AWS Graviton, Oracle ARM, Apple Silicon (via VM).</p>
+                    <a href="https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-aarch64" target="_blank" class="btn btn-primary">⬇️ Download aarch64</a>
+                </div>
+            </div>
+
+            <div class="quick-install">
+                <div class="quick-install-title">⚡ Quick Install via wget (Linux)</div>
+<pre><span class="comment"># For x86_64 systems:</span>
+wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-x86 && chmod +x client
+
+<span class="comment"># For aarch64 / ARM64 systems:</span>
+wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-aarch64 && chmod +x client</pre>
+            </div>
+
+            <p class="download-note">
+                🔗 View all releases on GitHub: 
+                <a href="https://github.com/anontokenpadma/Tedex/releases/tag/Tedex-binary" target="_blank">github.com/anontokenpadma/Tedex/releases</a>
+            </p>
         </div>
     </section>
 
@@ -622,8 +767,15 @@
                 <div class="step">
                     <div class="step-number">3</div>
                     <div>
-                        <h3>Install & Control</h3>
-                        <p>Use <code>client-x86</code> on your Linux server to install the Client, and run Client Manager on your personal machine to remote-control your servers.</p>
+                        <h3>Download & Install</h3>
+                        <p>Download the appropriate binary for your architecture (x86_64 or aarch64), rename it to <code>client</code>, make it executable with <code>chmod +x</code>, then use <code>./client</code> on your Linux server to install the Client.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h3>Control Remotely</h3>
+                        <p>Run <code>./client</code> on your personal machine with the <code>-u</code> flag to launch the Client Manager and remote-control your servers.</p>
                     </div>
                 </div>
             </div>
@@ -633,7 +785,7 @@
     <section id="docs">
         <div class="section-title">
             <h2>CLI Documentation</h2>
-            <p>Standard syntax for <code>client-x86</code></p>
+            <p>Standard syntax for <code>./client</code></p>
         </div>
 
         <div class="cli-docs">
@@ -643,7 +795,7 @@
                     <span class="tag tag-manager">MANAGER</span>
                 </div>
 <pre><span class="comment"># Used to log in to the management interface and control installed clients</span>
-<span class="cmd">./client-x86</span> <span class="opt">-u</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span></pre>
+<span class="cmd">./client</span> <span class="opt">-u</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span></pre>
             </div>
 
             <div class="command-block">
@@ -653,7 +805,7 @@
                 </div>
 <pre><span class="comment"># Install the client so this server can be controlled by the Manager</span>
 <span class="comment"># --name: Set an identifier for this server on the system</span>
-<span class="cmd">./client-x86</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Prod-01"</span></pre>
+<span class="cmd">./client</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Prod-01"</span></pre>
             </div>
 
             <div class="command-block">
@@ -662,7 +814,7 @@
                     <span class="tag tag-client">CLIENT</span>
                 </div>
 <pre><span class="comment"># Keep the connection alive, auto-reconnect on network drops. Does NOT auto-start on reboot.</span>
-<span class="cmd">./client-x86</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Dev"</span> <span class="opt">--persist</span></pre>
+<span class="cmd">./client</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Dev"</span> <span class="opt">--persist</span></pre>
             </div>
 
             <div class="command-block">
@@ -672,7 +824,7 @@
                 </div>
 <pre><span class="comment"># Turn the host into a system service.</span>
 <span class="comment"># Includes --persist functionality + Auto-restarts on system reboot.</span>
-<span class="cmd">./client-x86</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-DB"</span> <span class="opt">-r</span></pre>
+<span class="cmd">./client</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-DB"</span> <span class="opt">-r</span></pre>
             </div>
 
             <div class="command-block">
@@ -681,7 +833,7 @@
                     <span class="tag tag-client">CLIENT</span>
                 </div>
 <pre><span class="comment"># Completely remove the previously installed client and service from the machine</span>
-<span class="cmd">./client-x86</span> <span class="opt">--uninstall</span></pre>
+<span class="cmd">./client</span> <span class="opt">--uninstall</span></pre>
             </div>
 
             <div class="command-block">
@@ -690,10 +842,10 @@
                     <span class="tag tag-future">NETWORKING</span>
                 </div>
 <pre><span class="comment"># Specify WSS connection (defaults to anontokenforever.dpdns.org)</span>
-<span class="cmd">./client-x86</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org</span> <span class="opt">-u</span> ...
+<span class="cmd">./client</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org</span> <span class="opt">-u</span> ...
 
 <span class="comment"># [FUTURE] Direct connection via traditional IP and Port</span>
-<span class="comment"># ./client-x86 -s &lt;host-ip&gt; -p &lt;port&gt; ... (In development)</span></pre>
+<span class="comment"># ./client -s &lt;host-ip&gt; -p &lt;port&gt; ... (In development)</span></pre>
             </div>
         </div>
 
@@ -709,7 +861,7 @@
                     <span>Example Session</span>
                     <span class="tag tag-shell">INTERACTIVE</span>
                 </div>
-<pre><span class="prompt">$</span> <span class="cmd">./client-x86</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-u</span> <span class="val">user</span> <span class="val">password</span>
+<pre><span class="prompt">$</span> <span class="cmd">./client</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-u</span> <span class="val">user</span> <span class="val">password</span>
 <span class="output">manager user — type help</span>
 
 <span class="prompt">user@tedex&gt;</span> <span class="cmd">list</span>
