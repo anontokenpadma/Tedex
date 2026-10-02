@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tedex - Remote Linux Server Management | Beta Access</title>
+    <style>
+        :root {
+            --bg-main: #0b1120;
+            --bg-card: #111827;
+            --bg-code: #030712;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent: #10b981;
+            --accent-secondary: #3b82f6;
+            --border: #1f2937;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Beta Announcement Bar */
+        .beta-banner {
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+            color: #000;
+            text-align: center;
+            padding: 0.625rem 1rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            position: sticky;
+            top: 0;
+            z-index: 101;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .beta-banner a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 800;
+        }
+
+        .beta-banner .pulse {
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 34px;
+            background: rgba(11, 17, 32, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-badge {
+            background: var(--warning);
+            color: #000;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: #000 !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            transition: transform 0.2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 5% 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Features */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-secondary);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Beta Policy Section */
+        .beta-policy {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(239, 68, 68, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .policy-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .policy-icon {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .policy-icon.danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .policy-icon.info {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-secondary);
+        }
+
+        .policy-item h4 {
+            margin-bottom: 0.25rem;
+            font-size: 1.05rem;
+        }
+
+        .policy-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .policy-highlight {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid var(--danger);
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            margin-top: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .policy-highlight strong {
+            color: var(--danger);
+        }
+
+        .policy-success {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Workflow */
+        .workflow {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--accent-secondary);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* CLI Documentation */
+        .cli-docs {
+            margin-top: 2rem;
+        }
+
+        .command-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .command-header {
+            background: #1f2937;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .command-header span {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        .tag {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-manager { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .tag-client { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .tag-future { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
+        .tag-system { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+        .tag-shell { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        .cmd { color: #60a5fa; }
+        .opt { color: #fbbf24; }
+        .val { color: #34d399; }
+        .comment { color: #6b7280; font-style: italic; }
+        .prompt { color: #f59e0b; }
+        .output { color: #9ca3af; }
+
+        /* Manager Shell Section */
+        .manager-shell {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 3rem;
+            border: 1px solid var(--accent-secondary);
+            margin-top: 3rem;
+        }
+
+        .shell-commands {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .shell-cmd-card {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .shell-cmd-card h4 {
+            color: var(--accent);
+            font-family: 'Consolas', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        .shell-cmd-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .nav-links a:not(.nav-cta) { display: none; }
+            .hero { padding: 4rem 5% 2rem; }
+            .workflow { padding: 2rem 1.5rem; }
+            .beta-policy { padding: 2rem 1.5rem; }
+            .manager-shell { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Beta Announcement Bar -->
+    <div class="beta-banner">
+        <span class="pulse"></span>
+        🧪 Currently in Beta — <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank">Register now</a> to experience it for FREE!
+    </div>
+
+    <nav>
+        <div class="logo">
+            ⚡ Tedex <span class="logo-badge">BETA</span>
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#beta-policy">Beta Policy</a>
+            <a href="#workflow">How It Works</a>
+            <a href="#docs">CLI Docs</a>
+            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="nav-cta">Get Early Access</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <span class="badge">🚀 Early Access Program</span>
+        <h1>Remote Linux Server Management. Secure. Powerful.</h1>
+        <p>Tedex provides a secure tunnel via WebSocket Secure (WSS) that lets you install, control, and maintain persistent connections to your Linux servers from anywhere.</p>
+        <div class="cta-buttons">
+            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="btn btn-primary">🎯 Register for Early Access</a>
+            <a href="#docs" class="btn btn-secondary">Read CLI Documentation</a>
+        </div>
+    </header>
+
+    <section id="features">
+        <div class="section-title">
+            <h2>Built for SysAdmins & DevOps</h2>
+            <p>A stable WebSocket architecture optimized for remote control and persistent connections.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <span class="card-icon">🔒</span>
+                <h3>WebSocket Secure (WSS)</h3>
+                <p>All connections between Client Manager and target servers are encrypted via WSS at <code style="background:rgba(255,255,255,0.1); padding:2px 4px; border-radius:4px;">anontokenforever.dpdns.org</code>.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🔁</span>
+                <h3>Service & Auto-Restart</h3>
+                <p>Built-in Service mode. Keep connections alive forever and auto-revive (restart) even after a server reboot.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🛡️</span>
+                <h3>Clear Permissions</h3>
+                <p>Client Manager (controller) and Client (target server) share the same credentials but have distinct, transparent roles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beta Policy Section -->
+    <section id="beta-policy">
+        <div class="section-title">
+            <h2>Beta Terms & Policy</h2>
+            <p>Transparent information about the trial phase before the official launch</p>
+        </div>
+        
+        <div class="beta-policy">
+            <div class="policy-grid">
+                <div class="policy-item">
+                    <div class="policy-icon">🎁</div>
+                    <div>
+                        <h4>FREE Trial Experience</h4>
+                        <p>All Tedex features are completely free throughout the Beta phase so users can experience the full product.</p>
+                    </div>
+                </div>
+                <div class="policy-item">
+                    <div class="policy-icon info">📅</div>
+                    <div>
+                        <h4>2-Week Advance Notice</h4>
+                        <p>Before the official paid plans are released, we will notify all Beta users <strong>at least 2 weeks in advance</strong> so you can prepare.</p>
+                    </div>
+                </div>
+                <div class="policy-item">
+                    <div class="policy-icon">💰</div>
+                    <div>
+                        <h4>Paid Plans Coming Later</h4>
+                        <p>Paid service tiers and detailed pricing will be <strong>officially announced after the Beta phase ends</strong>.</p>
+                    </div>
+                </div>
+                <div class="policy-item">
+                    <div class="policy-icon">🔧</div>
+                    <div>
+                        <h4>Continuous Improvement</h4>
+                        <p>During the Beta phase, the system may undergo maintenance, upgrades, or configuration changes to improve the product.</p>
+                    </div>
+                </div>
+                <div class="policy-item">
+                    <div class="policy-icon danger">⚠️</div>
+                    <div>
+                        <h4>Admin Rights Reserved</h4>
+                        <p>We reserve the full right to adjust, suspend, or terminate any free account at any time when necessary.</p>
+                    </div>
+                </div>
+                <div class="policy-item">
+                    <div class="policy-icon danger">🛑</div>
+                    <div>
+                        <h4>Free Tier Revocation</h4>
+                        <p>After the trial phase ends, we reserve the right to revoke free access for any account without prior notice.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-success">
+                <strong>✅ Our Commitment:</strong> Before officially launching paid service plans, we will notify all registered Beta users <strong>at least 2 weeks in advance</strong>, giving you enough time to make an informed decision.
+            </div>
+
+            <div class="policy-highlight">
+                <strong>⚠️ Important Notice:</strong> The Tedex administrator <strong>reserves the right to revoke the free service tier for any account, at any time after the trial phase ends</strong>. Please read the terms carefully before registering.
+            </div>
+        </div>
+    </section>
+
+    <section id="workflow">
+        <div class="section-title">
+            <h2>Registration & Usage Flow</h2>
+            <p>Simple, tightly controlled by the administrator.</p>
+        </div>
+        <div class="workflow">
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>Register via Google Form</h3>
+                        <p>Fill out the <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" style="color: var(--accent); text-decoration: underline;">official registration form</a>. This is a required step to join the Early Access Program.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>Admin Review & Credential Issuance</h3>
+                        <p>Your submission goes directly to the Admin's Gmail. Once verified, the Admin will reply via email with your personal <code>user</code> and <code>password</code>.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>Install & Control</h3>
+                        <p>Use <code>client-x86</code> on your Linux server to install the Client, and run Client Manager on your personal machine to remote-control your servers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="docs">
+        <div class="section-title">
+            <h2>CLI Documentation</h2>
+            <p>Standard syntax for <code>client-x86</code></p>
+        </div>
+
+        <div class="cli-docs">
+            <div class="command-block">
+                <div class="command-header">
+                    <span>Client Manager Login (Controller)</span>
+                    <span class="tag tag-manager">MANAGER</span>
+                </div>
+<pre><span class="comment"># Used to log in to the management interface and control installed clients</span>
+<span class="cmd">./client-x86</span> <span class="opt">-u</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span></pre>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span>Standard Client Installation</span>
+                    <span class="tag tag-client">CLIENT</span>
+                </div>
+<pre><span class="comment"># Install the client so this server can be controlled by the Manager</span>
+<span class="comment"># --name: Set an identifier for this server on the system</span>
+<span class="cmd">./client-x86</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Prod-01"</span></pre>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span>Persistent Connection (Persist)</span>
+                    <span class="tag tag-client">CLIENT</span>
+                </div>
+<pre><span class="comment"># Keep the connection alive, auto-reconnect on network drops. Does NOT auto-start on reboot.</span>
+<span class="cmd">./client-x86</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Dev"</span> <span class="opt">--persist</span></pre>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span>Run as System Service (Recommended)</span>
+                    <span class="tag tag-system">SYSTEM SERVICE</span>
+                </div>
+<pre><span class="comment"># Turn the host into a system service.</span>
+<span class="comment"># Includes --persist functionality + Auto-restarts on system reboot.</span>
+<span class="cmd">./client-x86</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-DB"</span> <span class="opt">-r</span></pre>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span>Uninstall</span>
+                    <span class="tag tag-client">CLIENT</span>
+                </div>
+<pre><span class="comment"># Completely remove the previously installed client and service from the machine</span>
+<span class="cmd">./client-x86</span> <span class="opt">--uninstall</span></pre>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span>WebSocket & Future Roadmap</span>
+                    <span class="tag tag-future">NETWORKING</span>
+                </div>
+<pre><span class="comment"># Specify WSS connection (defaults to anontokenforever.dpdns.org)</span>
+<span class="cmd">./client-x86</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org</span> <span class="opt">-u</span> ...
+
+<span class="comment"># [FUTURE] Direct connection via traditional IP and Port</span>
+<span class="comment"># ./client-x86 -s &lt;host-ip&gt; -p &lt;port&gt; ... (In development)</span></pre>
+            </div>
+        </div>
+
+        <!-- Manager Shell Section -->
+        <div class="manager-shell">
+            <div class="section-title" style="margin-bottom: 2rem;">
+                <h2 style="font-size: 2rem;">🖥️ Manager Interactive Shell</h2>
+                <p>After logging in as Client Manager, you enter an interactive shell to manage your connected devices.</p>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span>Example Session</span>
+                    <span class="tag tag-shell">INTERACTIVE</span>
+                </div>
+<pre><span class="prompt">$</span> <span class="cmd">./client-x86</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-u</span> <span class="val">user</span> <span class="val">password</span>
+<span class="output">manager user — type help</span>
+
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">list</span>
+<span class="output">Connected devices:
+  1. Server-Prod-01 (online)
+  2. Server-DB (online)
+  3. Server-Dev (offline)</span>
+
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">attach</span> <span class="val">Server-Prod-01</span>
+<span class="output">[Attached to Server-Prod-01]
+Now controlling the remote shell. Type 'exit' to disconnect.</span>
+
+<span class="prompt">user@Server-Prod-01:~$</span> <span class="cmd">ls -la</span>
+<span class="output">total 24
+drwxr-xr-x 3 user user 4096 Oct  2 10:15 .
+drwxr-xr-x 5 root root 4096 Sep 28 09:00 ..
+-rw-r--r-- 1 user user  220 Sep 28 09:00 .bash_logout</span>
+
+<span class="prompt">user@Server-Prod-01:~$</span> <span class="cmd">exit</span>
+<span class="output">[Disconnected from Server-Prod-01]</span>
+
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">remove</span> <span class="val">Server-Dev</span>
+<span class="output">[Removed Server-Dev - client stopped and uninstalled]</span>
+
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">exit</span>
+<span class="output">Goodbye!</span></pre>
+            </div>
+
+            <div class="shell-commands">
+                <div class="shell-cmd-card">
+                    <h4>list</h4>
+                    <p>Shows all connected devices with their status (online/offline) and device IDs.</p>
+                </div>
+                <div class="shell-cmd-card">
+                    <h4>attach &lt;device_id&gt;</h4>
+                    <p>Connect to a client's shell for remote control. Type <code>exit</code> while attached to disconnect and return to manager prompt.</p>
+                </div>
+                <div class="shell-cmd-card">
+                    <h4>remove &lt;device_id&gt;</h4>
+                    <p>Stop the client service and completely uninstall it from the target server.</p>
+                </div>
+                <div class="shell-cmd-card">
+                    <h4>exit</h4>
+                    <p>Exit the Manager shell and close the connection to the Tedex server.</p>
+                </div>
+            </div>
+
+            <div class="policy-highlight" style="margin-top: 2rem;">
+                <strong>💡 Pro Tip:</strong> When you're attached to a client shell and type <code>exit</code>, you'll be returned to the Manager prompt (<code>user@tedex&gt;</code>). To fully exit the Manager shell, type <code>exit</code> again.
+            </div>
+        </div>
+    </section>
+
+    <section id="register" style="text-align: center;">
+        <div class="card" style="max-width: 600px; margin: 0 auto; padding: 3rem; border-color: var(--warning);">
+            <span class="card-icon" style="font-size: 3rem;">🎯</span>
+            <h2 style="margin-bottom: 1rem;">Register for Early Access Now!</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Be among the first to use Tedex completely free during the Beta phase. Limited accounts available!</p>
+            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;">📝 Open Registration Form</a>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1.5rem;">By registering, you agree to the Tedex Beta Terms & Policy.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Tedex Service. Linux Server Management via WebSocket.</p>
+        <p style="font-size: 0.875rem; margin-top: 0.5rem;">Default WSS Domain: anontokenforever.dpdns.org</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--warning);">⚠️ Beta Version — Service rights reserved by administrator</p>
+    </footer>
+
+</body>
+</html>
