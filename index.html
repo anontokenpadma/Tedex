@@ -947,7 +947,7 @@ drwxr-xr-x 5 root root 4096 Sep 28 09:00 ..
             <div class="card">
                 <span class="card-icon">📦</span>
                 <h3>Signed Releases</h3>
-                <p>Each snapshot ships with <code style="background:rgba(255,255,255,0.1); padding:2px 4px; border-radius:4px;">MANIFEST.sha256</code> plus a verification record (toolchain pins, proof counts, honest scope). Anyone can rebuild and re-check.</p>
+                <p>Each snapshot ships with <code style="background:rgba(255,255,255,0.1); padding:2px 4px; border-radius:4px;">MANIFEST.sha256</code> plus a verification record (toolchain pins, proof counts, honest scope). Proof evidence is available for audit on request — only the client binary is distributed; product sources stay private.</p>
             </div>
             <div class="card">
                 <span class="card-icon">🔁</span>
@@ -957,6 +957,9 @@ drwxr-xr-x 5 root root 4096 Sep 28 09:00 ..
         </div>
         <div class="policy-highlight" style="margin-top: 2rem;">
             <strong>Honest scope — what is NOT claimed:</strong> cryptographic strength is not proved; OS syscalls are axiomatized (assumed correct); <code>ioctl</code> / <code>fork</code> / signal semantics and the <code>term_attach</code> loop are specified and tested but not machine-proved (the latter is blocked by a documented VST toolchain limitation); the display fail-open timing policy is tested-only by design; the toolchain is community-grade, not qualified. No "unhackable" claims — only the checks listed above.
+        </div>
+        <div class="policy-success" style="margin-top: 1rem;">
+            <strong>🔓 Open-attack policy & bug bounty:</strong> attack the Beta service freely — no permission needed. A <strong>confirmed, non-trivial vulnerability</strong> (e.g. remote takeover of the server, or real information disclosure) earns <strong>1,000,000 VND</strong>. Mail the reproduction details to <strong>anontokenpadma@gmail.com</strong>; reward goes to the <strong>earliest reporter</strong> of each finding and is paid after we confirm it. The bounty will increase as funding grows, with further rounds to open later. Trivial issues (missing headers, version banners) don't qualify.
         </div>
     </section>
 
