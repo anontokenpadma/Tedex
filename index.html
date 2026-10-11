@@ -602,6 +602,7 @@
             <a href="#beta-policy">Beta Policy</a>
             <a href="#workflow">How It Works</a>
             <a href="#docs">CLI Docs</a>
+            <a href="#assurance">Assurance</a>
             <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="nav-cta">Get Early Access</a>
         </div>
     </nav>
@@ -844,8 +845,8 @@ wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-b
 <pre><span class="comment"># Specify WSS connection (defaults to anontokenforever.dpdns.org)</span>
 <span class="cmd">./client</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org</span> <span class="opt">-u</span> ...
 
-<span class="comment"># [FUTURE] Direct connection via traditional IP and Port</span>
-<span class="comment"># ./client -s &lt;host-ip&gt; -p &lt;port&gt; ... (In development)</span></pre>
+<span class="comment"># Direct host/port flags (both live, per built-in usage text)</span>
+<span class="cmd">./client</span> <span class="opt">-s</span> <span class="val">&lt;host-ip&gt;</span> <span class="opt">-p</span> <span class="val">&lt;port&gt;</span> <span class="opt">-u</span> ...</pre>
             </div>
         </div>
 
@@ -912,6 +913,50 @@ drwxr-xr-x 5 root root 4096 Sep 28 09:00 ..
             <div class="policy-highlight" style="margin-top: 2rem;">
                 <strong>💡 Pro Tip:</strong> When you're attached to a client shell and type <code>exit</code>, you'll be returned to the Manager prompt (<code>user@tedex&gt;</code>). To fully exit the Manager shell, type <code>exit</code> again.
             </div>
+        </div>
+    </section>
+
+    <section id="assurance">
+        <div class="section-title">
+            <h2>Machine-Checked Assurance</h2>
+            <p>Every number below is reproducible from the signed release bundle — not a marketing claim.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <span class="card-icon">✅</span>
+                <h3>SPARK Ada: 1754 / 1754</h3>
+                <p>GNATprove max level, overflow checks on, <strong>all proof checks discharged with zero warnings</strong>. Covers parsers, protocol logic, auth decisions and the Base64 layer.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">📐</span>
+                <h3>Coq: 45 Theorems</h3>
+                <p>Machine-checked Gallina models of echo prediction, auth verdicts, backoff policy and attach handoff — including the full 4-branch Decide logic and the documented fail-open policy.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🔬</span>
+                <h3>VST: 9 C Functions</h3>
+                <p>End-to-end separation-logic proofs of the C wrappers (I/O loops, poll paths, errno handling with a ghost discipline proving every errno read returns the last-written value) under CompCert semantics.</p>
+            </div>
+        </div>
+        <div class="grid-3" style="margin-top: 2rem;">
+            <div class="card">
+                <span class="card-icon">🧪</span>
+                <h3>Differential Testing</h3>
+                <p>Python oracle transcribed line-for-line from the Ada sources: 20/20 vectors match, plus 4128 machine-evaluated Coq-vs-oracle checks (2000 fuzz pairs, auth/backoff/jitter matrices).</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">📦</span>
+                <h3>Signed Releases</h3>
+                <p>Each snapshot ships with <code style="background:rgba(255,255,255,0.1); padding:2px 4px; border-radius:4px;">MANIFEST.sha256</code> plus a verification record (toolchain pins, proof counts, honest scope). Anyone can rebuild and re-check.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🔁</span>
+                <h3>Unit Fuzz Suites</h3>
+                <p>Echo vectors, SHA vectors and 20k+ parser fuzz cases run green on every build, alongside the proofs — testing and proving guard each other.</p>
+            </div>
+        </div>
+        <div class="policy-highlight" style="margin-top: 2rem;">
+            <strong>Honest scope — what is NOT claimed:</strong> cryptographic strength is not proved; OS syscalls are axiomatized (assumed correct); <code>ioctl</code> / <code>fork</code> / signal semantics and the <code>term_attach</code> loop are specified and tested but not machine-proved (the latter is blocked by a documented VST toolchain limitation); the display fail-open timing policy is tested-only by design; the toolchain is community-grade, not qualified. No "unhackable" claims — only the checks listed above.
         </div>
     </section>
 
