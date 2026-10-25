@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tedex - Remote Linux Server Management | Beta Access</title>
+    <title>Tedex - Secure Remote Shell Access for Linux | Beta</title>
+    <meta name="description" content="Tedex provides secure remote shell access for Linux devices through a managed WSS relay with per-device enrollment keys, automatic reconnects, and optional service mode.">
+    <meta name="theme-color" content="#0b1120">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tedex - Secure Remote Shell Access for Linux">
+    <meta property="og:description" content="Manage authorized Linux devices through a verified WSS relay with device-scoped access and optional automatic reconnection.">
     <style>
         :root {
             --bg-main: #0b1120;
@@ -251,9 +256,13 @@
         }
 
         .card-icon {
-            font-size: 2rem;
+            font-family: 'Consolas', monospace;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
             margin-bottom: 1rem;
             display: block;
+            color: var(--accent);
         }
 
         .card h3 {
@@ -394,7 +403,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-family: 'Consolas', monospace;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
             flex-shrink: 0;
         }
 
@@ -589,12 +601,12 @@
     <!-- Beta Announcement Bar -->
     <div class="beta-banner">
         <span class="pulse"></span>
-        🧪 Currently in Beta — <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank">Register now</a> to experience it for FREE!
+        BETA — <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" rel="noopener noreferrer">request early access</a> to try Tedex free during the Beta.
     </div>
 
     <nav>
         <div class="logo">
-            ⚡ Tedex <span class="logo-badge">BETA</span>
+            Tedex <span class="logo-badge">BETA</span>
         </div>
         <div class="nav-links">
             <a href="#features">Features</a>
@@ -602,42 +614,42 @@
             <a href="#beta-policy">Beta Policy</a>
             <a href="#workflow">How It Works</a>
             <a href="#docs">CLI Docs</a>
-            <a href="#assurance">Assurance</a>
-            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="nav-cta">Get Early Access</a>
+            <a href="#security">Security</a>
+            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" rel="noopener noreferrer" class="nav-cta">Get Early Access</a>
         </div>
     </nav>
 
     <header class="hero">
-        <span class="badge">🚀 Early Access Program</span>
-        <h1>Remote Linux Server Management. Secure. Powerful.</h1>
-        <p>Tedex provides a secure tunnel via WebSocket Secure (WSS) that lets you install, control, and maintain persistent connections to your Linux servers from anywhere.</p>
+        <span class="badge">Early Access Program</span>
+        <h1>Secure Remote Shell Access for Your Linux Devices.</h1>
+        <p>Tedex connects administrators to Linux devices through a managed relay. Use verified WSS transport, per-device enrollment keys, device-side reconnects, and an optional system service for stable access from anywhere.</p>
         <div class="cta-buttons">
-            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="btn btn-primary">🎯 Register for Early Access</a>
-            <a href="#downloads" class="btn btn-tertiary">📦 Download Client</a>
+            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Register for Early Access</a>
+            <a href="#downloads" class="btn btn-tertiary">Download Client</a>
             <a href="#docs" class="btn btn-secondary">Read CLI Documentation</a>
         </div>
     </header>
 
     <section id="features">
         <div class="section-title">
-            <h2>Built for SysAdmins & DevOps</h2>
-            <p>A stable WebSocket architecture optimized for remote control and persistent connections.</p>
+            <h2>Built for Administrators Who Need Reliable Access</h2>
+            <p>A focused remote-shell workflow with encrypted transport, device-level access, and automatic reconnection.</p>
         </div>
         <div class="grid-3">
             <div class="card">
-                <span class="card-icon">🔒</span>
-                <h3>WebSocket Secure (WSS)</h3>
-                <p>All connections between Client Manager and target servers are encrypted via WSS at <code style="background:rgba(255,255,255,0.1); padding:2px 4px; border-radius:4px;">anontokenforever.dpdns.org</code>.</p>
+                <span class="card-icon">TLS</span>
+                <h3>TLS-Verified WSS</h3>
+                <p>Connect through the hosted WSS endpoint with certificate-chain and hostname verification. Raw TCP or <code>ws://</code> should only be used inside a trusted private network.</p>
             </div>
             <div class="card">
-                <span class="card-icon">🔁</span>
-                <h3>Service & Auto-Restart</h3>
-                <p>Built-in Service mode. Keep connections alive forever and auto-revive (restart) even after a server reboot.</p>
+                <span class="card-icon">SYNC</span>
+                <h3>Reconnect & Service Mode</h3>
+                <p><code>--persist</code> automatically reconnects after network interruptions. On systemd hosts, <code>-r</code> installs Tedex as a service that also starts after reboot.</p>
             </div>
             <div class="card">
-                <span class="card-icon">🛡️</span>
-                <h3>Clear Permissions</h3>
-                <p>Client Manager (controller) and Client (target server) share the same credentials but have distinct, transparent roles.</p>
+                <span class="card-icon">KEY</span>
+                <h3>Separate Device Access</h3>
+                <p>Your account password controls the administration console. Each managed device uses its own enrollment key, which can be revoked without changing the account password.</p>
             </div>
         </div>
     </section>
@@ -646,137 +658,153 @@
     <section id="downloads">
         <div class="downloads">
             <div class="section-title" style="margin-bottom: 1rem;">
-                <h2>📦 Download Binaries</h2>
-                <p>Choose the appropriate binary for your system architecture. Click the button to download directly from GitHub.</p>
+                <h2>Download the Client</h2>
+                <p>Choose the client for your Linux architecture. The same client can run the administration console or connect a managed device.</p>
             </div>
 
             <div class="download-grid">
                 <div class="download-card">
                     <div class="arch-icon">💻</div>
                     <h3>x86_64</h3>
-                    <p>For standard Intel / AMD 64-bit Linux servers and workstations.</p>
-                    <a href="https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-x86" target="_blank" class="btn btn-primary">⬇️ Download x86_64</a>
+                    <p>For Intel / AMD 64-bit Linux systems.</p>
+                    <a href="https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-x86_64" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Download x86_64</a>
                 </div>
                 <div class="download-card">
                     <div class="arch-icon">📱</div>
                     <h3>aarch64 (ARM64)</h3>
-                    <p>For ARM-based servers like Raspberry Pi, AWS Graviton, Oracle ARM, Apple Silicon (via VM).</p>
-                    <a href="https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-aarch64" target="_blank" class="btn btn-primary">⬇️ Download aarch64</a>
+                    <p>For ARM64 servers such as Raspberry Pi, AWS Graviton, and Oracle ARM.</p>
+                    <a href="https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-aarch64" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Download ARM64</a>
                 </div>
             </div>
 
             <div class="quick-install">
-                <div class="quick-install-title">⚡ Quick Install via wget (Linux)</div>
+                <div class="quick-install-title">Quick Install via wget (Linux)</div>
 <pre><span class="comment"># For x86_64 systems:</span>
-wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-x86 && chmod +x client
+wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-x86_64 && chmod +x client
 
 <span class="comment"># For aarch64 / ARM64 systems:</span>
 wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-binary/client-aarch64 && chmod +x client</pre>
             </div>
 
             <p class="download-note">
-                🔗 View all releases on GitHub: 
-                <a href="https://github.com/anontokenpadma/Tedex/releases/tag/Tedex-binary" target="_blank">github.com/anontokenpadma/Tedex/releases</a>
+                Verify the download before running it:
+                <a href="https://github.com/anontokenpadma/Tedex/releases/tag/Tedex-binary" target="_blank" rel="noopener noreferrer">view release metadata and SHA-256 checksums on GitHub</a>.
             </p>
+
+            <div class="quick-install">
+                <div class="quick-install-title">Current release SHA-256</div>
+<pre><span class="comment"># x86_64</span>
+05a594607d12d8aa316ef7613b6c9c0e24f243ec35897e081b799fdcda00c622
+
+<span class="comment"># ARM64</span>
+60f4f15a06003f0d8b97c8df6c0eb233c50b9cefe192c308d168ecba754c93fb</pre>
+            </div>
         </div>
     </section>
 
     <!-- Beta Policy Section -->
     <section id="beta-policy">
         <div class="section-title">
-            <h2>Beta Terms & Policy</h2>
-            <p>Transparent information about the trial phase before the official launch</p>
+            <h2>Beta Terms</h2>
+            <p>Simple terms for the early-access period</p>
         </div>
         
         <div class="beta-policy">
             <div class="policy-grid">
                 <div class="policy-item">
-                    <div class="policy-icon">🎁</div>
+                    <div class="policy-icon">FREE</div>
                     <div>
-                        <h4>FREE Trial Experience</h4>
-                        <p>All Tedex features are completely free throughout the Beta phase so users can experience the full product.</p>
+                        <h4>Free During Beta</h4>
+                        <p>Approved early-access accounts can use the Beta service without charge while the program is active.</p>
                     </div>
                 </div>
                 <div class="policy-item">
-                    <div class="policy-icon info">📅</div>
+                    <div class="policy-icon info">NOTICE</div>
                     <div>
-                        <h4>2-Week Advance Notice</h4>
-                        <p>Before the official paid plans are released, we will notify all Beta users <strong>at least 2 weeks in advance</strong> so you can prepare.</p>
+                        <h4>Advance Notice</h4>
+                        <p>We will notify active Beta users <strong>at least 2 weeks in advance</strong> before officially launching paid plans, so you can decide whether to continue.</p>
                     </div>
                 </div>
                 <div class="policy-item">
-                    <div class="policy-icon">💰</div>
+                    <div class="policy-icon">PLAN</div>
                     <div>
-                        <h4>Paid Plans Coming Later</h4>
-                        <p>Paid service tiers and detailed pricing will be <strong>officially announced after the Beta phase ends</strong>.</p>
+                        <h4>Future Plans</h4>
+                        <p>Paid plans, if introduced, will be announced with their scope and pricing before they take effect.</p>
                     </div>
                 </div>
                 <div class="policy-item">
-                    <div class="policy-icon">🔧</div>
+                    <div class="policy-icon">UPDATE</div>
                     <div>
-                        <h4>Continuous Improvement</h4>
-                        <p>During the Beta phase, the system may undergo maintenance, upgrades, or configuration changes to improve the product.</p>
+                        <h4>Maintenance & Improvements</h4>
+                        <p>Features, availability, and security controls may improve or change during Beta. Planned changes may require brief maintenance.</p>
                     </div>
                 </div>
                 <div class="policy-item">
-                    <div class="policy-icon danger">⚠️</div>
+                    <div class="policy-icon danger">FAIR</div>
                     <div>
-                        <h4>Admin Rights Reserved</h4>
-                        <p>We reserve the full right to adjust, suspend, or terminate any free account at any time when necessary.</p>
+                        <h4>Fair & Secure Use</h4>
+                        <p>We may adjust, suspend, or terminate accounts when reasonably necessary for abuse prevention, security, legal compliance, or service operation.</p>
                     </div>
                 </div>
                 <div class="policy-item">
-                    <div class="policy-icon danger">🛑</div>
+                    <div class="policy-icon danger">SAFE</div>
                     <div>
-                        <h4>Free Tier Revocation</h4>
-                        <p>After the trial phase ends, we reserve the right to revoke free access for any account without prior notice.</p>
+                        <h4>Free Access After Beta</h4>
+                        <p>After the Beta period, free access may be changed or revoked. The 2-week notice commitment applies specifically to the launch of official paid plans.</p>
                     </div>
                 </div>
             </div>
 
             <div class="policy-success">
-                <strong>✅ Our Commitment:</strong> Before officially launching paid service plans, we will notify all registered Beta users <strong>at least 2 weeks in advance</strong>, giving you enough time to make an informed decision.
+                <strong>Beta commitment:</strong> We will notify active Beta users at least 2 weeks before officially launching paid plans.
             </div>
 
             <div class="policy-highlight">
-                <strong>⚠️ Important Notice:</strong> The Tedex administrator <strong>reserves the right to revoke the free service tier for any account, at any time after the trial phase ends</strong>. Please read the terms carefully before registering.
+                <strong>Security note:</strong> Tedex provides remote interactive shell access. Only connect devices you own or are authorized to administer, and review commands before running them.
             </div>
         </div>
     </section>
 
     <section id="workflow">
         <div class="section-title">
-            <h2>Registration & Usage Flow</h2>
-            <p>Simple, tightly controlled by the administrator.</p>
+            <h2>Registration & Connection Flow</h2>
+            <p>Register, issue a device key, connect the device, then access it from the manager console.</p>
         </div>
         <div class="workflow">
             <div class="workflow-steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div>
-                        <h3>Register via Google Form</h3>
-                        <p>Fill out the <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" style="color: var(--accent); text-decoration: underline;">official registration form</a>. This is a required step to join the Early Access Program.</p>
+                        <h3>Request Early Access</h3>
+                        <p>Submit the <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">registration form</a>. Access is issued after review.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <div>
-                        <h3>Admin Review & Credential Issuance</h3>
-                        <p>Your submission goes directly to the Admin's Gmail. Once verified, the Admin will reply via email with your personal <code>user</code> and <code>password</code>.</p>
+                        <h3>Receive Your Account</h3>
+                        <p>If approved, you will receive your Tedex username and account password by email. Use these only for the administration console.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <div>
-                        <h3>Download & Install</h3>
-                        <p>Download the appropriate binary for your architecture (x86_64 or aarch64), rename it to <code>client</code>, make it executable with <code>chmod +x</code>, then use <code>./client</code> on your Linux server to install the Client.</p>
+                        <h3>Create a Device Key</h3>
+                        <p>Sign in with <code>-u</code>, then run <code>create-key &lt;user&gt; &lt;device-id&gt;</code> in the manager console. The device key is displayed once; store it securely and never reuse it for another device.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
                     <div>
-                        <h3>Control Remotely</h3>
-                        <p>Run <code>./client</code> on your personal machine with the <code>-u</code> flag to launch the Client Manager and remote-control your servers.</p>
+                        <h3>Connect the Device</h3>
+                        <p>On the Linux device, run the client with <code>-c</code>, your device key, and the same <code>--name</code>. Use <code>--persist</code> for automatic reconnect or <code>-r</code> for service mode.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <h3>Open a Remote Shell</h3>
+                        <p>From the manager, run <code>list</code>, then <code>attach &lt;device-id&gt;</code>. The attached session is an interactive shell on the connected device.</p>
                     </div>
                 </div>
             </div>
@@ -792,30 +820,29 @@ wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-b
         <div class="cli-docs">
             <div class="command-block">
                 <div class="command-header">
-                    <span>Client Manager Login (Controller)</span>
+                    <span>Administration Console</span>
                     <span class="tag tag-manager">MANAGER</span>
                 </div>
-<pre><span class="comment"># Used to log in to the management interface and control installed clients</span>
-<span class="cmd">./client</span> <span class="opt">-u</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span></pre>
+<pre><span class="comment"># Sign in to manage devices and issue enrollment keys</span>
+<span class="cmd">./client</span> --ws <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-u</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span></pre>
             </div>
 
             <div class="command-block">
                 <div class="command-header">
-                    <span>Standard Client Installation</span>
-                    <span class="tag tag-client">CLIENT</span>
+                    <span>Issue a Device Key</span>
+                    <span class="tag tag-manager">MANAGER</span>
                 </div>
-<pre><span class="comment"># Install the client so this server can be controlled by the Manager</span>
-<span class="comment"># --name: Set an identifier for this server on the system</span>
-<span class="cmd">./client</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Prod-01"</span></pre>
+<pre><span class="comment"># Run this from the manager prompt. The key is shown only once.</span>
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">create-key</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;device-id&gt;</span></pre>
             </div>
 
             <div class="command-block">
                 <div class="command-header">
-                    <span>Persistent Connection (Persist)</span>
+                    <span>Connect a Device</span>
                     <span class="tag tag-client">CLIENT</span>
                 </div>
-<pre><span class="comment"># Keep the connection alive, auto-reconnect on network drops. Does NOT auto-start on reboot.</span>
-<span class="cmd">./client</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-Dev"</span> <span class="opt">--persist</span></pre>
+<pre><span class="comment"># Use the per-device key created above, not the account password.</span>
+<span class="cmd">./client</span> --ws <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;device-key&gt;</span> <span class="opt">--name</span> <span class="val">&lt;device-id&gt;</span> <span class="opt">--persist</span></pre>
             </div>
 
             <div class="command-block">
@@ -823,9 +850,9 @@ wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-b
                     <span>Run as System Service (Recommended)</span>
                     <span class="tag tag-system">SYSTEM SERVICE</span>
                 </div>
-<pre><span class="comment"># Turn the host into a system service.</span>
-<span class="comment"># Includes --persist functionality + Auto-restarts on system reboot.</span>
-<span class="cmd">./client</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;password&gt;</span> <span class="opt">--name</span> <span class="val">"Server-DB"</span> <span class="opt">-r</span></pre>
+<pre><span class="comment"># Installs Tedex as a service and starts it after reboot.</span>
+<span class="comment"># Requires administrator privileges and systemd.</span>
+<span class="cmd">sudo ./client</span> --ws <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-c</span> <span class="val">&lt;user&gt;</span> <span class="val">&lt;device-key&gt;</span> <span class="opt">--name</span> <span class="val">&lt;device-id&gt;</span> <span class="opt">-r</span></pre>
             </div>
 
             <div class="command-block">
@@ -833,19 +860,19 @@ wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-b
                     <span>Uninstall</span>
                     <span class="tag tag-client">CLIENT</span>
                 </div>
-<pre><span class="comment"># Completely remove the previously installed client and service from the machine</span>
-<span class="cmd">./client</span> <span class="opt">--uninstall</span></pre>
+<pre><span class="comment"># Remove the service installed with -r. Use the same device ID.</span>
+<span class="cmd">sudo ./client</span> <span class="opt">--uninstall</span> <span class="opt">--name</span> <span class="val">&lt;device-id&gt;</span></pre>
             </div>
 
             <div class="command-block">
                 <div class="command-header">
-                    <span>WebSocket & Future Roadmap</span>
-                    <span class="tag tag-future">NETWORKING</span>
+                    <span>Transport Options</span>
+                    <span class="tag tag-system">NETWORK</span>
                 </div>
-<pre><span class="comment"># Specify WSS connection (defaults to anontokenforever.dpdns.org)</span>
-<span class="cmd">./client</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org</span> <span class="opt">-u</span> ...
+<pre><span class="comment"># Recommended for Internet access: verified WSS endpoint</span>
+<span class="cmd">./client</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-u</span> ...
 
-<span class="comment"># Direct host/port flags (both live, per built-in usage text)</span>
+<span class="comment"># Direct TCP: use only on a trusted/private network</span>
 <span class="cmd">./client</span> <span class="opt">-s</span> <span class="val">&lt;host-ip&gt;</span> <span class="opt">-p</span> <span class="val">&lt;port&gt;</span> <span class="opt">-u</span> ...</pre>
             </div>
         </div>
@@ -853,7 +880,7 @@ wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-b
         <!-- Manager Shell Section -->
         <div class="manager-shell">
             <div class="section-title" style="margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem;">🖥️ Manager Interactive Shell</h2>
+                <h2 style="font-size: 2rem;">Manager Interactive Shell</h2>
                 <p>After logging in as Client Manager, you enter an interactive shell to manage your connected devices.</p>
             </div>
 
@@ -865,118 +892,117 @@ wget -O client https://github.com/anontokenpadma/Tedex/releases/download/Tedex-b
 <pre><span class="prompt">$</span> <span class="cmd">./client</span> <span class="opt">--ws</span> <span class="val">wss://anontokenforever.dpdns.org/tedex</span> <span class="opt">-u</span> <span class="val">user</span> <span class="val">password</span>
 <span class="output">manager user — type help</span>
 
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">create-key</span> <span class="val">user</span> <span class="val">server-prod-01</span>
+<span class="output">OK key for user/server-prod-01 (save it now, shown once):
+tdk_&lt;enrollment-key&gt;</span>
+
 <span class="prompt">user@tedex&gt;</span> <span class="cmd">list</span>
-<span class="output">Connected devices:
-  1. Server-Prod-01 (online)
-  2. Server-DB (online)
-  3. Server-Dev (offline)</span>
+<span class="output">1/10 device(s): online=1 offline=0 never-connected=0
+  - server-prod-01 [online] - &lt;address&gt;</span>
 
-<span class="prompt">user@tedex&gt;</span> <span class="cmd">attach</span> <span class="val">Server-Prod-01</span>
-<span class="output">[Attached to Server-Prod-01]
-Now controlling the remote shell. Type 'exit' to disconnect.</span>
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">attach</span> <span class="val">server-prod-01</span>
+<span class="output">ATTACHED server-prod-01</span>
 
-<span class="prompt">user@Server-Prod-01:~$</span> <span class="cmd">ls -la</span>
-<span class="output">total 24
-drwxr-xr-x 3 user user 4096 Oct  2 10:15 .
-drwxr-xr-x 5 root root 4096 Sep 28 09:00 ..
--rw-r--r-- 1 user user  220 Sep 28 09:00 .bash_logout</span>
+<span class="prompt">user@server-prod-01:~$</span> <span class="cmd">hostname</span>
+<span class="output">server-prod-01</span>
 
-<span class="prompt">user@Server-Prod-01:~$</span> <span class="cmd">exit</span>
-<span class="output">[Disconnected from Server-Prod-01]</span>
+<span class="prompt">user@server-prod-01:~$</span> <span class="cmd">exit</span>
+<span class="output">session ended — reconnecting...</span>
 
-<span class="prompt">user@tedex&gt;</span> <span class="cmd">remove</span> <span class="val">Server-Dev</span>
-<span class="output">[Removed Server-Dev - client stopped and uninstalled]</span>
-
-<span class="prompt">user@tedex&gt;</span> <span class="cmd">exit</span>
-<span class="output">Goodbye!</span></pre>
+<span class="prompt">user@tedex&gt;</span> <span class="cmd">remove</span> <span class="val">server-prod-01</span>
+<span class="output">OK removed server-prod-01</span></pre>
             </div>
 
             <div class="shell-commands">
                 <div class="shell-cmd-card">
                     <h4>list</h4>
-                    <p>Shows all connected devices with their status (online/offline) and device IDs.</p>
+                    <p>Shows known devices, quota usage, and online, offline, or never-connected status.</p>
                 </div>
                 <div class="shell-cmd-card">
                     <h4>attach &lt;device_id&gt;</h4>
-                    <p>Connect to a client's shell for remote control. Type <code>exit</code> while attached to disconnect and return to manager prompt.</p>
+                    <p>Open an interactive shell on a connected device. Typing <code>exit</code> ends that remote shell session.</p>
+                </div>
+                <div class="shell-cmd-card">
+                    <h4>create-key &lt;user&gt; &lt;device_id&gt;</h4>
+                    <p>Issue a unique enrollment key for one device. Copy it directly to that device and keep it private.</p>
                 </div>
                 <div class="shell-cmd-card">
                     <h4>remove &lt;device_id&gt;</h4>
-                    <p>Stop the client service and completely uninstall it from the target server.</p>
+                    <p>Revoke the device key and known-device entry. A connected service client is instructed to stop and uninstall.</p>
                 </div>
                 <div class="shell-cmd-card">
-                    <h4>exit</h4>
-                    <p>Exit the Manager shell and close the connection to the Tedex server.</p>
+                    <h4>quit / exit</h4>
+                    <p>Close the manager console. When attached to a device, exit the remote shell first.</p>
                 </div>
             </div>
 
             <div class="policy-highlight" style="margin-top: 2rem;">
-                <strong>💡 Pro Tip:</strong> When you're attached to a client shell and type <code>exit</code>, you'll be returned to the Manager prompt (<code>user@tedex&gt;</code>). To fully exit the Manager shell, type <code>exit</code> again.
+                <strong>Tip:</strong> After <code>create-key</code>, the enrollment key is displayed only once. If it is lost, remove the device entry and create a new key.
             </div>
         </div>
     </section>
 
-    <section id="assurance">
+    <section id="security">
         <div class="section-title">
-            <h2>Machine-Checked Assurance</h2>
-            <p>Every number below is reproducible from the signed release bundle — not a marketing claim.</p>
+            <h2>Security & Service Controls</h2>
+            <p>Practical controls for day-to-day remote administration</p>
         </div>
         <div class="grid-3">
             <div class="card">
-                <span class="card-icon">✅</span>
-                <h3>SPARK Ada: 1754 / 1754</h3>
-                <p>GNATprove max level, overflow checks on, <strong>all proof checks discharged with zero warnings</strong>. Covers parsers, protocol logic, auth decisions and the Base64 layer.</p>
+                <span class="card-icon">TLS</span>
+                <h3>Verified Connections</h3>
+                <p>The hosted endpoint uses WSS with certificate-chain and hostname validation. Always confirm the connection URL before entering credentials.</p>
             </div>
             <div class="card">
-                <span class="card-icon">📐</span>
-                <h3>Coq: 45 Theorems</h3>
-                <p>Machine-checked Gallina models of echo prediction, auth verdicts, backoff policy and attach handoff — including the full 4-branch Decide logic and the documented fail-open policy.</p>
+                <span class="card-icon">KEY</span>
+                <h3>Scoped Device Keys</h3>
+                <p>Issue a separate key for each device. Revoke one device without replacing your account password or disturbing other devices.</p>
             </div>
             <div class="card">
-                <span class="card-icon">🔬</span>
-                <h3>VST: 9 C Functions</h3>
-                <p>End-to-end separation-logic proofs of the C wrappers (I/O loops, poll paths, errno handling with a ghost discipline proving every errno read returns the last-written value) under CompCert semantics.</p>
+                <span class="card-icon">STATUS</span>
+                <h3>Visible Device Status</h3>
+                <p>Use the manager console to review known devices, connection state, and quota before attaching to a shell.</p>
             </div>
         </div>
         <div class="grid-3" style="margin-top: 2rem;">
             <div class="card">
-                <span class="card-icon">🧪</span>
-                <h3>Differential Testing</h3>
-                <p>Python oracle transcribed line-for-line from the Ada sources: 20/20 vectors match, plus 4128 machine-evaluated Coq-vs-oracle checks (2000 fuzz pairs, auth/backoff/jitter matrices).</p>
+                <span class="card-icon">SHA</span>
+                <h3>Checksummed Downloads</h3>
+                <p>Each release provides SHA-256 digests for the x86_64 and ARM64 client binaries. Verify the digest before installation.</p>
             </div>
             <div class="card">
-                <span class="card-icon">📦</span>
-                <h3>Signed Releases</h3>
-                <p>Each snapshot ships with <code style="background:rgba(255,255,255,0.1); padding:2px 4px; border-radius:4px;">MANIFEST.sha256</code> plus a verification record (toolchain pins, proof counts, honest scope). Proof evidence is available for audit on request — only the client binary is distributed; product sources stay private.</p>
+                <span class="card-icon">RECOVER</span>
+                <h3>Recovery Controls</h3>
+                <p><code>--persist</code> restores interrupted sessions, while <code>-r</code> provides reboot-safe service operation on supported systemd hosts.</p>
             </div>
             <div class="card">
-                <span class="card-icon">🔁</span>
-                <h3>Unit Fuzz Suites</h3>
-                <p>Echo vectors, SHA vectors and 20k+ parser fuzz cases run green on every build, alongside the proofs — testing and proving guard each other.</p>
+                <span class="card-icon">AUTH</span>
+                <h3>Authorized Access Only</h3>
+                <p>Connect only devices you own or are explicitly authorized to administer. Treat enrollment keys like passwords.</p>
             </div>
         </div>
         <div class="policy-highlight" style="margin-top: 2rem;">
-            <strong>Honest scope — what is NOT claimed:</strong> cryptographic strength is not proved; OS syscalls are axiomatized (assumed correct); <code>ioctl</code> / <code>fork</code> / signal semantics and the <code>term_attach</code> loop are specified and tested but not machine-proved (the latter is blocked by a documented VST toolchain limitation); the display fail-open timing policy is tested-only by design; the toolchain is community-grade, not qualified. No "unhackable" claims — only the checks listed above.
+            <strong>Security disclosure:</strong> Test only accounts and devices you control. Report suspected vulnerabilities with reproduction details to <strong>anontokenpadma@gmail.com</strong>. Do not access other users’ systems or data. Qualified, confirmed non-trivial findings are eligible for a <strong>1,000,000 VND</strong> reward under the Beta disclosure program; eligibility and payment are confirmed after review.
         </div>
         <div class="policy-success" style="margin-top: 1rem;">
-            <strong>🔓 Open-attack policy & bug bounty:</strong> attack the Beta service freely — no permission needed. A <strong>confirmed, non-trivial vulnerability</strong> (e.g. remote takeover of the server, or real information disclosure) earns <strong>1,000,000 VND</strong>. Mail the reproduction details to <strong>anontokenpadma@gmail.com</strong>; reward goes to the <strong>earliest reporter</strong> of each finding and is paid after we confirm it. The bounty will increase as funding grows, with further rounds to open later. Trivial issues (missing headers, version banners) don't qualify.
+            <strong>Responsible security wording:</strong> Tedex applies layered controls, but no remote-access service can guarantee absolute security. Protect your credentials, verify the endpoint, keep clients updated, and remove devices you no longer use.
         </div>
     </section>
 
     <section id="register" style="text-align: center;">
         <div class="card" style="max-width: 600px; margin: 0 auto; padding: 3rem; border-color: var(--warning);">
-            <span class="card-icon" style="font-size: 3rem;">🎯</span>
+            <span class="card-icon" style="font-size: 1rem;">ACCESS</span>
             <h2 style="margin-bottom: 1rem;">Register for Early Access Now!</h2>
             <p style="color: var(--text-secondary); margin-bottom: 2rem;">Be among the first to use Tedex completely free during the Beta phase. Limited accounts available!</p>
-            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;">📝 Open Registration Form</a>
+            <a href="https://forms.gle/nSP8K3FpJRthga2j9" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; justify-content: center;">Open Registration Form</a>
             <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1.5rem;">By registering, you agree to the Tedex Beta Terms & Policy.</p>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Tedex Service. Linux Server Management via WebSocket.</p>
-        <p style="font-size: 0.875rem; margin-top: 0.5rem;">Default WSS Domain: anontokenforever.dpdns.org</p>
-        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--warning);">⚠️ Beta Version — Service rights reserved by administrator</p>
+        <p>&copy; 2026 Tedex Service. Secure remote shell access for Linux devices.</p>
+        <p style="font-size: 0.875rem; margin-top: 0.5rem;">Hosted WSS endpoint: anontokenforever.dpdns.org</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--warning);">BETA SERVICE — availability and features may evolve</p>
     </footer>
 
 </body>
